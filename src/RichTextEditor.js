@@ -326,7 +326,6 @@ export default class RichTextEditor extends Component {
           scrollEnabled={!isAutoHeight}
           style={[this.props.style || {}, { height: this.state.height }]}
           hideKeyboardAccessoryView={true}
-          keyboardDisplayRequiresUserAction={false}
           ref={(r) => {this.webviewBridge = r}}
           onBridgeMessage={(message) => this.onBridgeMessage(message)}
           injectedJavaScript={injectScript}
@@ -559,7 +558,9 @@ export default class RichTextEditor extends Component {
   }
 
   setEditorHeight(height) {
-    this._sendAction(actions.setEditorHeight, height);
+    if (!this.props.autoHeight) {
+      this._sendAction(actions.setEditorHeight, height);
+    }
   }
 
   setFooterHeight() {
