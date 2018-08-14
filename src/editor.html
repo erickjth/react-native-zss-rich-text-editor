@@ -885,10 +885,8 @@
 				clearHtmlIfTextIsEmpty('zss_editor_content');
 
 				$(document).on('selectionchange',function(e){
-					console.log('selectionchange');
 					zss_editor.calculateEditorHeightWithCaretPosition();
 					zss_editor.setScrollPosition();
-					zss_editor.updateWindowHeight();
 					zss_editor.enabledEditingItems(e);
 					notifyIfSelectedTextHasChanged();
 				});
@@ -898,7 +896,6 @@
 					zss_editor.isDragging = true;
 					zss_editor.updateScrollOffset = true;
 					zss_editor.setScrollPosition();
-					zss_editor.updateWindowHeight();
 					zss_editor.enabledEditingItems(e);
 				});
 				$(window).on('touchstart', function(e) {
@@ -1389,7 +1386,9 @@
 					WebViewBridge.send(JSON.stringify({
 						type: 'CONTENT_CHANGE',
 						data: {content: getHtml("zss_editor_content")}
-					}))
+					}));
+
+					zss_editor.updateWindowHeight();
 				});
 			}
 
